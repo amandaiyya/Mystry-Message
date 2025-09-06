@@ -1,6 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
-import { authOptions } from "../auth/[...nextauth]/options";
 import { User } from "next-auth";
 import { handler } from "../auth/[...nextauth]/route";
 
@@ -49,7 +48,7 @@ export async function POST(request: Request){
             {status: 200}
         )
     } catch (error) {
-        console.log("failed to update user status to accept messages")
+        console.log("failed to update user status to accept messages", error)
         return Response.json(
             {
                 success: false,
@@ -99,7 +98,7 @@ export async function GET(request: Request) {
             {status: 200}
         )
     } catch (error) {
-        console.log("Error in getting message acceptence status")
+        console.log("Error in getting message acceptence status", error)
         return Response.json(
             {
                 success: false,

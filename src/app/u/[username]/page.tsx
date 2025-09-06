@@ -12,13 +12,12 @@ import axios, { AxiosError } from 'axios';
 import { Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-// import { useCompletion } from '@ai-sdk/react';
 import * as z from 'zod';
 
-const page = () => {
+export default function Page(){
   const [isLoading, setIsLoading] = useState(false)
   const [isSuggestLoading, setIsSuggestLoading] = useState(false)
   const [AiSuggestions, setAiSuggestions] = useState([])
@@ -163,6 +162,4 @@ const page = () => {
     </div>
   )
 }
-
-export default page
  

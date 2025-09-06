@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Message } from '@/model/User'
 import { AcceptMessageSchema } from '@/schemas/acceptMessageSchema'
@@ -17,7 +17,7 @@ import { Separator } from '@/components/ui/separator'
 import { Switch } from '@/components/ui/switch'
 import { User } from 'next-auth'
 
-const page = () => {
+export default function Dashboard(){
   const {data: session} = useSession()
 
   const [messages, setMessages] = useState<Message[]>([])
@@ -173,7 +173,7 @@ const page = () => {
       </Button>
       <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
         {messages.length > 0 ? (
-          messages.map((message, _) => (
+          messages.map((message) => (
             <MessageCard
               key={String(message._id)}
               message={message}
@@ -187,5 +187,3 @@ const page = () => {
     </div>
   )
 }
-
-export default page
