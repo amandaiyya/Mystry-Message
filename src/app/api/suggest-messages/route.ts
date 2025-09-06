@@ -31,12 +31,22 @@ export async function POST(req: Request) {
       },
       {status: 200}
     )
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.log("An unexpected error occured ", error)
+
+    if(error instanceof Error){
+      return Response.json(
+        {
+          success: false,
+          message: error.message
+        },{status: 500}
+      )
+    }
+    
     return Response.json(
       {
         success: false,
-        message: error.message || 'Failed to generate suggest questions'
+        message: 'Failed to generate suggest questions'
       },{status: 500}
     )
   }
