@@ -69,13 +69,10 @@ export default function SingIn(){
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Email/Username</FormLabel>
-                <FormControl>
-                  <Input 
-                    type="email/username"
-                    placeholder="Enter email/username"
-                    {...field} 
-                  />
-                </FormControl>
+                <Input 
+                  placeholder="Enter email/username"
+                  {...field} 
+                />
                 <FormMessage />
               </FormItem>
             )}
