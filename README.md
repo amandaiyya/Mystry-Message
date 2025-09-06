@@ -11,12 +11,6 @@
 
 ---
 
-## 🚀 Live Demo
-
-🌐 [Visit Mystry Message on Vercel](https://your-deployment-url.vercel.app)
-
----
-
 ## 📽️ About the Project
 
 **Mystry Message** is a platform inspired by anonymous messaging apps, where users can:
