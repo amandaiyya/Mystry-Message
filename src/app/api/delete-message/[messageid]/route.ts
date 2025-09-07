@@ -5,20 +5,23 @@ import { User } from "next-auth";
 // import { NextRequest } from "next/server"; 
 import { auth } from "@/auth";
 
-type RouteContext = {
-    params: {
-        messageid: string;
-    }
-}
+// type RouteContext = {
+//     params: {
+//         messageid: string;
+//     }
+// }
 
 export async function DELETE(
     request: Request,
     // context: {params: {messageid: string}}
-    context: RouteContext
+    // context: RouteContext
+    {params}: {params: Promise<{messageid: string}>}
 ){
     await dbConnect()
     // const messageId = params.messageid
-    const {messageid} = await context.params;
+    // const {messageid} = await context.params;
+    const {messageid} = await params
+
     // const session = await handler.auth()
     const session = await auth()
     const user: User = session?.user as User
