@@ -1,15 +1,18 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { User } from "next-auth";
-import { handler } from "@/app/api/auth/[...nextauth]/route";
+// import { handler } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/auth";
 
 export async function DELETE(
     request: Request,
-    {params}: {params: {messageid: string}}
+    context: {params: {messageid: string}}
 ){
     await dbConnect()
-    const messageId = params.messageid
-    const session = await handler.auth()
+    // const messageId = params.messageid
+    const {messageid} = await context.params;
+    // const session = await handler.auth()
+    const session = await auth()
     const user: User = session?.user as User
 
     if(!session || !session.user){
@@ -27,7 +30,7 @@ export async function DELETE(
             {_id: user._id},
             {$pull: {
                 messages: {
-                    _id: messageId
+                    _id: messageid
                 }
             }}
         )
