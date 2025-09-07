@@ -1,25 +1,22 @@
-import { NextAuthConfig } from 'next-auth';
-import credentials from 'next-auth/providers/credentials';
+import { NextAuthConfig } from "next-auth";
 
-const liteAuthOptions: NextAuthConfig = {
-    providers: [
-        credentials({
-            id: "credentials",
-            name: "Credentials",
-            credentials: {
-                identifier: { label: "Email/Password" },
-                password: { label: "Password", type: "password" },
-            },
-            async authorize() {
-                // This should never be called from middleware
-                return null;
-            },
-        })
-    ],
+const liteOptions: NextAuthConfig = {
     session: {
         strategy: "jwt",
     },
+    callbacks: {
+        async session({ session, token }) {
+            if (session.user) {
+                session.user._id = token._id;
+                session.user.username = token.username;
+                session.user.isVerified = token.isVerified;
+                session.user.isAcceptingMessages = token.isAcceptingMessages;
+            }
+            return session;
+        },
+    },
     secret: process.env.NEXTAUTH_SECRET,
+    providers: []
 };
-    
-export default liteAuthOptions;
+
+export default liteOptions;

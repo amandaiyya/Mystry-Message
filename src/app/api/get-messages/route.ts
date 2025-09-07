@@ -1,13 +1,17 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { User } from "next-auth";
-import { handler } from "../auth/[...nextauth]/route";
+// import { handler } from "../auth/[...nextauth]/route";
+// import { handler } from "@/auth";
 import mongoose from "mongoose";
+import { auth } from "@/auth";
 
 export async function GET(request: Request){
     await dbConnect()
 
-    const session = await handler.auth()
+    // const session = await handler.auth()
+    const session = await auth()
+
     const user: User = session?.user as User
 
     if(!session || !session.user){

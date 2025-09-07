@@ -1,12 +1,15 @@
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { User } from "next-auth";
-import { handler } from "../auth/[...nextauth]/route";
+// import { handler } from "@/auth";
+// import { handler } from "../auth/[...nextauth]/route";
+import {auth} from '@/auth'
 
 export async function POST(request: Request){
     await dbConnect()
 
-    const session = await handler.auth()
+    // const session = await handler.auth()
+    const session = await auth()
     const user: User = session?.user as User
 
     if(!session || !session.user){
@@ -62,7 +65,9 @@ export async function POST(request: Request){
 export async function GET(request: Request) {
     await dbConnect()
 
-    const session = await handler.auth()
+    // const session = await handler.auth()
+    const session = await auth()
+
     const user: User = session?.user as User
 
     if(!session || !session.user){
