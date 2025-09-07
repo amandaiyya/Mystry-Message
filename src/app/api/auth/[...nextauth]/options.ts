@@ -3,7 +3,15 @@ import credentials from 'next-auth/providers/credentials';
 import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/User';
 import bcrypt from 'bcrypt';
+import { User } from 'next-auth';
 // import { JWT } from 'next-auth/jwt';
+
+interface credentialsReturnProps{
+    _id: string;
+    isVerified: boolean;
+    isAcceptingMessages: boolean;
+    username: string;
+}
 
 export const authOptions: NextAuthConfig = {
     providers: [
@@ -11,16 +19,23 @@ export const authOptions: NextAuthConfig = {
             id: "credentials",
             name: "Credentials",
             credentials: {
-                email: { label: "Email", type: "email" },
+                identifier: { label: "Email/Password"},
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials: any): Promise<any> {
+            async authorize(credentials): Promise< credentialsReturnProps | null>{
+                const {identifier, password} = credentials
+
+                if(!identifier || !password){
+                    throw new Error("Credentials are required")
+                }
+
                 await dbConnect();
+
                 try {
                     const user = await UserModel.findOne({
                         $or: [
-                            {email: credentials.identifier},
-                            {username: credentials.identifier}
+                            {email: identifier},
+                            {username: identifier}
                         ]
                     })
 
@@ -32,13 +47,18 @@ export const authOptions: NextAuthConfig = {
                         throw new Error("Please verify your accound before login")
                     }
 
-                    const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password)
+                    const isPasswordCorrect = await bcrypt.compare(String(password), user.password)
 
-                    if(isPasswordCorrect){
-                        return user;
-                    } else {
+                    if(!isPasswordCorrect){
                         throw new Error("Incorrect Password")
-                    }
+                    } 
+                    
+                    return {
+                        _id: String(user._id),
+                        isVerified: user.isVerified,
+                        isAcceptingMessages: user.isAcceptingMessage,
+                        username: user.username
+                    };
                 } catch (error: unknown) {
                     if(error instanceof Error)
                     throw new Error(error.message);

@@ -39,10 +39,6 @@ export default function SingIn(){
       toast("Login Failed",{
         description: "Incorrect Credentials"
       })
-    } else {
-      toast("Error",{
-        description: result.error
-      })
     }
 
     if(result?.url){
