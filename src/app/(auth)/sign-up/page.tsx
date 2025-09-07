@@ -59,7 +59,7 @@ export default function SignUp(){
 
   const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
     setIsSubmitting(true)
-    console.log(data) // to be removed
+
     try {
       const response = await axios.post<ApiResponse>('/api/sign-up', data)
 
@@ -69,8 +69,6 @@ export default function SignUp(){
 
       router.replace(`/verify/${username}`)
     } catch (error) {
-      console.log("Error during Signup", error)
-
       const axiosError = error as AxiosError<ApiResponse>
       const errorMessage = axiosError.response?.data.message
 

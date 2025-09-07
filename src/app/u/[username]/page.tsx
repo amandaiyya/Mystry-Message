@@ -46,7 +46,6 @@ export default function Page(){
 
        form.reset({...form.getValues(), content: ''})
     } catch (error) {
-      console.log("Error while sending message ", error)
       const axiosError = error as AxiosError<ApiResponse>;
       toast("Failed",{
         description: axiosError.response?.data.message || 'Failed to sent message'
@@ -65,7 +64,6 @@ export default function Page(){
       
       setAiSuggestions(parsedText || [])
     } catch (error) {
-      console.log("Error while generating AI suggest messages ", error)
       const axiosError = error as AxiosError<ApiResponse>;
       toast("Failed",{
         description: axiosError.response?.data.message || 'Failed to generate AI suggest messages'

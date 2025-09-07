@@ -37,7 +37,7 @@ export default function SingIn(){
 
     if(result?.error){
       toast("Login Failed",{
-        description: "Incorrect Credentials"
+        description: "Either Incorrect Credentials Or User is not verified"
       })
     }
 
