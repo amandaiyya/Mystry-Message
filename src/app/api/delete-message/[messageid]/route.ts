@@ -2,11 +2,19 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import { User } from "next-auth";
 // import { handler } from "@/app/api/auth/[...nextauth]/route";
+// import { NextRequest } from "next/server"; 
 import { auth } from "@/auth";
+
+type RouteContext = {
+    params: {
+        messageid: string;
+    }
+}
 
 export async function DELETE(
     request: Request,
-    context: {params: {messageid: string}}
+    // context: {params: {messageid: string}}
+    context: RouteContext
 ){
     await dbConnect()
     // const messageId = params.messageid
