@@ -1,7 +1,10 @@
 import NextAuth from "next-auth";
-import { authOptions } from "./options";
+import authOptions from "./options";
 
 export const handler = NextAuth(authOptions)
-
 export const GET = handler.handlers.GET;
 export const POST = handler.handlers.POST;
+// const {handlers} = NextAuth(authOptions)
+
+// export const GET = handlers.GET;
+// export const POST = handlers.POST;

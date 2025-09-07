@@ -3,8 +3,6 @@ import credentials from 'next-auth/providers/credentials';
 import dbConnect from '@/lib/dbConnect';
 import UserModel from '@/model/User';
 import bcrypt from 'bcrypt';
-import { User } from 'next-auth';
-// import { JWT } from 'next-auth/jwt';
 
 interface credentialsReturnProps{
     _id: string;
@@ -13,7 +11,7 @@ interface credentialsReturnProps{
     username: string;
 }
 
-export const authOptions: NextAuthConfig = {
+const authOptions: NextAuthConfig = {
     providers: [
         credentials({
             id: "credentials",
@@ -52,7 +50,7 @@ export const authOptions: NextAuthConfig = {
                     if(!isPasswordCorrect){
                         throw new Error("Incorrect Password")
                     } 
-                    
+
                     return {
                         _id: String(user._id),
                         isVerified: user.isVerified,
@@ -96,3 +94,5 @@ export const authOptions: NextAuthConfig = {
     },
     secret: process.env.NEXTAUTH_SECRET
 }
+
+export default authOptions;
